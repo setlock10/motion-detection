@@ -2,7 +2,11 @@ let capture;
 let ctx;
 let w = 320;
 let h = 240;
-let sampleSize = 10;
+let sampleSize = 5;
+let prevFrame = [];
+let old = [];
+let threshold = 50;
+let scalefactor = 1;
 
 function setup() {
   ctx = createCanvas(w, h);
@@ -27,20 +31,21 @@ function draw() {
 //   pop();
     let c = capture.get(0,0,w,h);
     c.loadPixels();
-    //c.pixels = pixelate(c.pixels);
-    for (let y = 0; y < h; y+= 1){
-        for (let x = 0; x < w; x+= 1){
-            let pos = (x + y * w) * 4;
-            let pixX = Math.floor(x/sampleSize) * sampleSize;
-            let pixY = Math.floor(y/sampleSize) * sampleSize;
-            let pixPos= (pixX + pixY * w) * 4
-            //let pixPos = ((Math.floor(x/sampleSize) * sampleSize ))
-            c.pixels[pos] = 0;
-            c.pixels[pos+1] = 0;
-            c.pixels[pos+2] = c.pixels[pixPos+2];
-           
-        }
-    }
+    c.pixels = pixelate(c.pixels);
+    //c.pixels = detect(c.pixels);
+    //console.log(prevFrame)
+    // for (let y = 0; y < h; y+= 1){
+    //     for (let x = 0; x < w; x+= 1){
+    //         let pos = (x + y * w) * 4;
+    //         let pixX = Math.floor(x/sampleSize) * sampleSize;
+    //         let pixY = Math.floor(y/sampleSize) * sampleSize;
+    //         let pixPos= (pixX + pixY * w) * 4;
+            
+    //         c.pixels[pos] = c.pixels[pixPos];
+    //         c.pixels[pos+1] = c.pixels[pixPos+1];
+    //         c.pixels[pos+2] = c.pixels[pixPos+2];
+    //     }
+    // }
     c.updatePixels();
    // console.log(c)
     push();
@@ -52,24 +57,76 @@ function draw() {
 }
 
 function pixelate(data){
-    for (let y = 0; y < h; y+= sampleSize){
-        for (let x = 0; x < w; x+= sampleSize){
+    let result = data;
+    for (let y = 0; y < h; y+= 1){
+        for (let x = 0; x < w; x+= 1){
             let pos = (x + y * w) * 4;
-            //let r = data[pos];
-            //let g = data[pos+1];
-            //let b = data[pos+2];
-            data[pos];
-            data[pos+1] = 0;
-            data[pos+2] = 0;
-            //ctx.fillStyle = rgb(r, g, b);
-            //ctx.fillRect(x, y, sampleSize, sampleSize)
+            let pixX = Math.floor(x/sampleSize) * sampleSize;
+            let pixY = Math.floor(y/sampleSize) * sampleSize;
+            let pixPos= (pixX + pixY * w) * 4;
+            if(prevFrame.length>0)
+           // result[pos] = data[pixPos] - prevFrame[pixPos];
+            //result[pos+1] = data[pixPos+1] - prevFrame[pixPos +1];
+            result[pos] = (data[pixPos] - prevFrame[pixPos]);
+            result[pos+1] =( data[pixPos+1] - prevFrame[pixPos +1]);
+            result[pos+2] = 255-(data[pixPos+2] - prevFrame[pixPos +2]);
 
         }
     }
 
+    prevFrame = result;
 
-
-    return data;
+    return result;
 
 
 }
+
+function detect(data){
+    let motion = [];
+    for (var y = 0; y < h; y++) {
+        for (var x = 0; x < w; x++) {
+          var pos = (x + y * w) * 4;
+          var r = data[pos];
+          var g = data[pos+1];
+          var b = data[pos+2];
+          motion[pos]= 255;
+          motion[pos+1]= 255;
+          motion[pos+2]= 255;
+          if(old[pos] && Math.abs(old[pos].red - r) > threshold) {
+            // push the x, y and rgb values into the motion array
+            // but multiply the x and y values bck up by scalefactor
+            // to get their actual screen position
+            //motion.push({x: x * scalefactor, y: y * scalefactor, r: r, g: g, b: b});
+           motion[pos] = r;
+           motion[pos+1] = 0;
+           motion[pos+2] = 0;
+
+          }
+          old[pos] = { red: r, green: g, blue: b};
+    }
+      }
+      //console.log(motion)
+    
+    return motion;
+}
+
+// function detect(data){
+//     let newFrame = data;
+//     //console.log(prevFrame.length)
+//     if (prevFrame.length > 0){
+//         for (let y = 0; y < h; y+= 1){
+//             for (let x = 0; x < w; x+= 1){
+//                 let pos = (x + y * w) * 4;
+//                 newFrame[pos] =255 - Math.abs(data[pos +2] - prevFrame[pos + 2]);
+//                 newFrame[pos + 1] = 255 - Math.abs(data[pos +2] - prevFrame[pos + 2]);
+//                // newFrame[pos + 2] = 255 - Math.abs(data[pos +2] - prevFrame[pos + 2]);
+//                 newFrame[pos + 2] =255;
+
+//                 //let pixX = Math.floor(x/sampleSize) * sampleSize;
+//                 //let pixY = Math.floor(y/sampleSize) * sampleSize;
+//             }
+//         }
+//     }
+//         prevFrame = data;
+//     return newFrame;
+// }
