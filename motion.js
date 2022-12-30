@@ -1,8 +1,8 @@
 let capture;
 let ctx;
-let w = 320;
-let h = 240;
-let sampleSize = 5;
+let w = 720;
+let h = 720;
+let sampleSize = 15;
 let prevFrame = [];
 let old = [];
 let threshold = 50;
@@ -64,13 +64,15 @@ function pixelate(data){
             let pixX = Math.floor(x/sampleSize) * sampleSize;
             let pixY = Math.floor(y/sampleSize) * sampleSize;
             let pixPos= (pixX + pixY * w) * 4;
-            if(prevFrame.length>0)
+            if(prevFrame.length>0){
            // result[pos] = data[pixPos] - prevFrame[pixPos];
             //result[pos+1] = data[pixPos+1] - prevFrame[pixPos +1];
-            result[pos] = (data[pixPos] - prevFrame[pixPos]);
-            result[pos+1] =( data[pixPos+1] - prevFrame[pixPos +1]);
-            result[pos+2] = 255-(data[pixPos+2] - prevFrame[pixPos +2]);
-
+            if(Math.abs(data[pixPos] - prevFrame[pixPos]) > 50){
+                result[pos] = (data[pixPos] - prevFrame[pixPos]);
+                result[pos+1] =( data[pixPos+1] - prevFrame[pixPos +1]);
+                result[pos+2] = 255-(data[pixPos+2] - prevFrame[pixPos +2]);
+            }
+            }
         }
     }
 
@@ -101,6 +103,9 @@ function detect(data){
            motion[pos+1] = 0;
            motion[pos+2] = 0;
 
+          }
+          else{
+            motion[pos+3] = 0;
           }
           old[pos] = { red: r, green: g, blue: b};
     }
