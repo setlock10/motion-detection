@@ -9,7 +9,7 @@ function setup() {
     capture.size(w, h);
     capture.hide();
     //ctx.style('scale','400%');
-    ctx.position(200,200)
+    ctx.position(10,10)
     //capture.scale(-1,1)
     //noLoop();
   }
