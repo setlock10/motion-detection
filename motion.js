@@ -2,10 +2,10 @@ let capture;
 let ctx;
 let w = 960;
 let h = 1280;
-let sampleSize = 15;
+let sampleSize = 25;
 let prevFrame = [];
 let old = [];
-let threshold = 50;
+let threshold = 25;
 let scalefactor = 1;
 
 function setup() {
