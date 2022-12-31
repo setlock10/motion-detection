@@ -1,0 +1,11 @@
+#canvas{
+    position: absolute;
+   transform: scaleX(-1);
+   left:1000px;
+   top: 225px;
+   scale:1000%;
+   
+}
+#video{
+    transform: scaleX(-1);
+ }
