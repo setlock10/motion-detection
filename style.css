@@ -1,13 +1,15 @@
 #canvas{
     position: absolute;
    transform: scaleX(-1);
-   left:800px;
+   left:200px;
    top: 0620px;
    scale:1000%;
    
 }
 #video{
     transform: scaleX(-1);
+    visibility: hidden;
+    
  }
  
  #diff{
