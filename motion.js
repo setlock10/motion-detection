@@ -1,7 +1,7 @@
 let capture;
 let ctx;
-let w = 720;
-let h = 720;
+let w = 960;
+let h = 1280;
 let sampleSize = 15;
 let prevFrame = [];
 let old = [];
