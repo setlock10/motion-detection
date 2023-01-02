@@ -1,5 +1,7 @@
 let capture;
+let diff;
 let ctx;
+let c;
 let w = 96;
 let h = 128;
 let sampleSize = 10;
@@ -24,9 +26,35 @@ function setup() {
 function draw(){
     
     //diff.updatePixels();
+    c = capture.get(0,0,w,h);
+    // diff = createImage(w,h);
+    diff = capture.get(0,0,w,h);
     //console.log(prevFrame)
    // ctx.drawImage(VIDEO, 0,0,w,h)
-     c = capture.get(0,0,w,h);
+    c.loadPixels();
+    // if (prevFrame.length > 0){
+    //     for (let i = 0; i < prevFrame.length; i++){
+    //         // if (i % 4 === 0) diff.data[i] = Math.abs(a.data[i] - prevFrame[i]);
+    //         // if (i % 4 === 1) diff.data[i] = Math.abs(a.data[i] - prevFrame[i]);
+    //         // if (i % 4 === 2) diff.data[i] = Math.abs(a.data[i] - prevFrame[i]);
+    //         if (i % 4 === 0) diff.pixels[i] = 255-(2*(Math.abs(c.pixels[i] - prevFrame[i])));
+    //         if (i % 4 === 1) diff.pixels[i] = 255-(2*(Math.abs(c.pixels[i] - prevFrame[i])));
+    //         if (i % 4 === 2) diff.pixels[i] = 255;
+    //         if (i % 4 === 3) diff.pixels[i] = 255;
+    //        //c.pixels[i]=0;
+    //     }
+    // }
+    //console.log(diff)
+    for (let i = 0; i < c.pixels.length; i++){
+        if (i % 4 === 0) c.pixels[i] = 0;
+        
+        
+    }
+    // diff.updatePixels();
+    prevFrame = c.pixels;
+   //c.imageData= diff.data;
+   c.updatePixels();
+   //console.log(c.pixels)  
  
     // push();
      translate(width,0);
