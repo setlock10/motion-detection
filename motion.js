@@ -18,6 +18,7 @@ function setup() {
   ctx.position(200,200)
   //capture.scale(-1,1)
   //noLoop();
+  frameRate(5);
 }
 function draw(){
     
