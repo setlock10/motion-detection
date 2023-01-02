@@ -21,7 +21,7 @@ function setup() {
   //capture.scale(-1,1)
   capture.style('scale','200%')
   //noLoop();
-  frameRate(1);
+  frameRate(5);
 }
 function draw(){
     
@@ -32,33 +32,35 @@ function draw(){
     //console.log(prevFrame)
    // ctx.drawImage(VIDEO, 0,0,w,h)
     c.loadPixels();
-    // if (prevFrame.length > 0){
-    //     for (let i = 0; i < prevFrame.length; i++){
-    //         // if (i % 4 === 0) diff.data[i] = Math.abs(a.data[i] - prevFrame[i]);
-    //         // if (i % 4 === 1) diff.data[i] = Math.abs(a.data[i] - prevFrame[i]);
-    //         // if (i % 4 === 2) diff.data[i] = Math.abs(a.data[i] - prevFrame[i]);
-    //         if (i % 4 === 0) diff.pixels[i] = 255-(2*(Math.abs(c.pixels[i] - prevFrame[i])));
-    //         if (i % 4 === 1) diff.pixels[i] = 255-(2*(Math.abs(c.pixels[i] - prevFrame[i])));
-    //         if (i % 4 === 2) diff.pixels[i] = 255;
-    //         if (i % 4 === 3) diff.pixels[i] = 255;
-    //        //c.pixels[i]=0;
-    //     }
-    // }
-    //console.log(diff)
-    for (let i = 0; i < c.pixels.length; i++){
-        if (i % 4 === 0) c.pixels[i] = 0;
-        
-        
+    diff.loadPixels();
+    if (prevFrame.length > 0){
+        for (let i = 0; i < prevFrame.length; i++){
+            // if (i % 4 === 0) diff.data[i] = Math.abs(a.data[i] - prevFrame[i]);
+            // if (i % 4 === 1) diff.data[i] = Math.abs(a.data[i] - prevFrame[i]);
+            // if (i % 4 === 2) diff.data[i] = Math.abs(a.data[i] - prevFrame[i]);
+            if (i % 4 === 0) diff.pixels[i] = 255-(2*(Math.abs(c.pixels[i] - prevFrame[i])));
+            if (i % 4 === 1) diff.pixels[i] = 255-(2*(Math.abs(c.pixels[i] - prevFrame[i])));
+            if (i % 4 === 2) diff.pixels[i] = 255;
+            if (i % 4 === 3) diff.pixels[i] = 255;
+           //c.pixels[i]=0;
+        }
     }
+    //console.log(diff)
+    // for (let i = 0; i < c.pixels.length; i++){
+    //     if (i % 4 === 0) c.pixels[i] = 0;
+        
+        
+    // }
     // diff.updatePixels();
     prevFrame = c.pixels;
    //c.imageData= diff.data;
    c.updatePixels();
+   diff.updatePixels();
    //console.log(c.pixels)  
  
     // push();
      translate(width,0);
      scale(-1, 1);
-     image(c, 0, 0);
+     image(diff, 0, 0);
     // pop();
 }
