@@ -62,7 +62,7 @@ function capture() {
     //var diffImageData = context.getImageData(0, 0, diffWidth, diffHeight);
     //var diff = processDiff(diffImageData)
      //context.globalCompositeOperation = 'source-over';
-    context.putImageData(diff, 0, 0);
+    context.putImageData(a, 0, 0);
     //diff.data=[];
     // do other stuff
     //console.log(diff.data);

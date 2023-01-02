@@ -1,19 +1,20 @@
 #canvas{
     position: absolute;
    transform: scaleX(-1);
-   left:200px;
+   left:960px;
    top: 0620px;
    scale:1000%;
    
 }
 #video{
     transform: scaleX(-1);
-    visibility: hidden;
+    /* visibility: hidden; */
     
  }
  
  #diff{
     position: absolute;
+    left:640px;
     scale:1000%;
     top:1250;
     background-color: black;
