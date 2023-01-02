@@ -17,6 +17,7 @@ function setup() {
   //ctx.style('scale','400%');
   //ctx.position(200,200)
   //capture.scale(-1,1)
+  capture.style('scale','400%')
   //noLoop();
   frameRate(5);
 }
