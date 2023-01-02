@@ -15,7 +15,7 @@ function setup() {
   capture.size(w, h);
   capture.hide();
   ctx.style('scale','1000%');
-  ctx.position(480,640)
+  ctx.position(440,580)
   //capture.scale(-1,1)
   capture.style('scale','200%')
   //noLoop();
@@ -29,8 +29,8 @@ function draw(){
      c = capture.get(0,0,w,h);
  
     // push();
-    // translate(width,0);
-    // scale(-1, 1);
+     translate(width,0);
+     scale(-1, 1);
      image(c, 0, 0);
     // pop();
 }
